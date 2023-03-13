@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Set;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +49,7 @@ public class UserControllerTest {
     @Test
     void validationUser() throws ValidationException {
         User newUser = userController.create(user);
-        HashSet<User> users = userController.findAllUsers();
+        Set<User> users = userController.findAllUsers();
 
         assertNotNull(users, "Список пользователей пустой.");
         assertEquals(1, users.size(), "Количество пользователей не соответствует");

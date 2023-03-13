@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +34,7 @@ public class FilmControllerTest {
     @Test
     void validationFilm() throws ValidationException {
         Film newFilm = filmController.create(film);
-        HashSet<Film> films = filmController.findAllFilms();
+        Set<Film> films = filmController.findAllFilms();
 
         assertNotNull(films, "Список фильмов пустой.");
         assertEquals(1, films.size(), "Количество фильмов не соответствует");

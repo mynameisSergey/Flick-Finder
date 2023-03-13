@@ -16,11 +16,11 @@ import java.util.*;
 @RequestMapping("/films")
 public class FilmController {
 
-    private final HashSet<Film> films = new HashSet<>();
+    private final Set<Film> films = new HashSet<>();
     private int idGenerator = 1;
 
     @GetMapping()
-    public HashSet<Film> findAllFilms() {
+    public Set<Film> findAllFilms() {
         return films;
     }
 
@@ -36,24 +36,24 @@ public class FilmController {
     }
 
     @PutMapping
-    public Film put(@RequestBody Film film) throws ValidationException {
-        if (validation(film)) {
-            for (Film film1 : films) {
-                if (film1.getId() == film.getId()) {
-                    films.remove(film1);
-                    films.add(film);
-                    log.info("Обновлен фильм {}", film.getName());
-                    return film;
+    public Film update(@RequestBody Film newFilm) throws ValidationException {
+        if (validation(newFilm)) {
+            for (Film film : films) {
+                if (film.getId() == newFilm.getId()) {
+                    films.remove(film);
+                    films.add(newFilm);
+                    log.info("Обновлен фильм {}", newFilm.getName());
+                    return newFilm;
                 } else {
                     log.warn("Обновление не произошло");
-                    throw new ValidationException("Фильма :" + film.getName() + "не существует");
+                    throw new ValidationException("Фильма :" + newFilm.getName() + "не существует");
                 }
             }
         }
-        return film;
+        return newFilm;
     }
 
-    boolean validation(Film film) throws ValidationException {
+    private boolean validation(Film film) throws ValidationException {
         if (!StringUtils.hasText(film.getName())) {
             log.warn("Название фильма id: {} отсутствует ", film.getId());
             throw new ValidationException("Название фильма не может быть пустым.");

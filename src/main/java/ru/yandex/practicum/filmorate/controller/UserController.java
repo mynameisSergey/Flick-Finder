@@ -15,11 +15,11 @@ import java.util.*;
 
 public class UserController {
 
-    private final HashSet<User> users = new HashSet<>();
+    private final Set<User> users = new HashSet<>();
     private int idGenerator = 1;
 
     @GetMapping()
-    public HashSet<User> findAllUsers() {
+    public Set<User> findAllUsers() {
         return users;
     }
 
@@ -35,24 +35,24 @@ public class UserController {
     }
 
     @PutMapping
-    public User put(@RequestBody User user) throws ValidationException {
-        if (validation(user)) {
-            for (User user1 : users) {
-                if (user1.getId() == user.getId()) {
-                    users.remove(user1);
-                    users.add(user);
-                    log.info(user.toString());
-                    return user;
+    public User update(@RequestBody User newUser) throws ValidationException {
+        if (validation(newUser)) {
+            for (User user : users) {
+                if (user.getId() == newUser.getId()) {
+                    users.remove(user);
+                    users.add(newUser);
+                    log.info(newUser.toString());
+                    return newUser;
                 } else {
                     log.warn("Обновление не произошло");
-                    throw new ValidationException("Пользователя с id:" + user.getId() + "не существует");
+                    throw new ValidationException("Пользователя с id:" + newUser.getId() + "не существует");
                 }
             }
         }
-        return user;
+        return newUser;
     }
 
-    boolean validation(User user) throws ValidationException {
+    private boolean validation(User user) throws ValidationException {
         if (!StringUtils.hasText(user.getEmail())) {
             log.warn("Неправильно ввели адрес электронной почты");
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
