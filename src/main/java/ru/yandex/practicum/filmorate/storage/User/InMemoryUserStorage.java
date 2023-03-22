@@ -3,9 +3,7 @@ package ru.yandex.practicum.filmorate.storage.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.filmorate.exceptions.UserEmailAlreadyExistException;
-import ru.yandex.practicum.filmorate.exceptions.UserLoginAlreadyExistException;
-import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.UserException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
@@ -27,16 +25,16 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public List<User> showUsers() {
+    public List<User> getUsers() {
         return new ArrayList<>(users.values());
     }
 
     @Override
-    public User showUserById(int id) {
+    public User findUserById(int id) {
 
         if (!(users.containsKey(id))) {
-            log.warn("Не возможно найти user с id - {}.", id);
-            throw new UserNotFoundException(String.format("Cannot search user by %s.", id));
+            log.warn("Cannot search user by id - {}.", id);
+            throw new UserException(String.format("Cannot search user by %s.", id));
         }
         return users.get(id);
     }
@@ -50,7 +48,7 @@ public class InMemoryUserStorage implements UserStorage {
             emails.add(user.getEmail());
             return user;
         } else {
-            log.debug("Ошибка формы запроса, запрос должен был быть формата PUT");
+            log.debug("Request form error, request must be formed PUT");
             return changeUser(user);
         }
     }
@@ -58,7 +56,7 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public User changeUser(User user) {
         if (!users.containsKey(user.getId())) {
-            log.debug("Ошибка формы запроса, запрос должен был быть формата POST");
+            log.debug("Request form error, request must have format POST");
             return addUser(user);
         } else {
             checkUser(user);
@@ -89,30 +87,29 @@ public class InMemoryUserStorage implements UserStorage {
 
         // проверка логина при создании и обновлении
         if (logins.contains(user.getLogin())) {
-            if (userCheck != null) {
-                if (!(user.getLogin().equals(userCheck.getLogin()))) {
-                    log.warn("User with login - \"{}\" already exist", user.getLogin());
-                    throw new UserLoginAlreadyExistException("User with this login already exist. " +
-                            "You cannot change User's login.");
-                }
+            if ((userCheck != null) & (!(user.getLogin().equals(userCheck.getLogin())))) {
+
+                log.warn("User with login - \"{}\" already exist", user.getLogin());
+                throw new UserException("User with this login already exist. " +
+                        "You cannot change User's login.");
             } else {
                 log.warn("User with login - \"{}\" already exist", user.getLogin());
-                throw new UserLoginAlreadyExistException("User with this login already exist. " +
+                throw new UserException("User with this login already exist. " +
                         "You cannot add User.");
             }
         }
 
         // проверка эмейла при создании и обновлении
-        if (emails.contains(user.getEmail())) {
+        if (emails.contains(user.getEmail()))  {
             if (userCheck != null) {
                 if (!(user.getEmail().equals(userCheck.getEmail()))) {
                     log.warn("User with login - \"{}\" already exist", user.getEmail());
-                    throw new UserEmailAlreadyExistException("User with this Email already exist. " +
+                    throw new UserException("User with this Email already exist. " +
                             "You cannot change User's login.");
                 }
             } else {
                 log.warn("User with Email - \"{}\" already exist", user.getEmail());
-                throw new UserEmailAlreadyExistException("User with this Email already exist. " +
+                throw new UserException("User with this Email already exist. " +
                         "You cannot add User.");
             }
         }

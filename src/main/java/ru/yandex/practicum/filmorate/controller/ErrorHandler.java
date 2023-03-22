@@ -4,30 +4,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.yandex.practicum.filmorate.exceptions.DateReleaseException;
-import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.FilmException;
 import ru.yandex.practicum.filmorate.exceptions.IncorrectParamException;
-import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.UserException;
 import ru.yandex.practicum.filmorate.model.ErrorResponse;
+
+import javax.validation.ValidationException;
 
 @RestControllerAdvice
 public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handlerUserNotFoundException(final UserNotFoundException e) {
+    public ErrorResponse handlerUserNotFoundException(final UserException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handlerUserNotFoundException(final FilmNotFoundException e) {
+    public ErrorResponse handlerUserNotFoundException(final FilmException e) {
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handlerDateReleaseException(final DateReleaseException e) {
+    public ErrorResponse handlerDateReleaseException(final ValidationException e) {
         return new ErrorResponse(e.getMessage());
     }
 

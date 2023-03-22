@@ -8,9 +8,9 @@ import java.util.List;
 @Component
 public interface UserStorage {
 
-    List<User> showUsers();
+    List<User> getUsers();
 
-    User showUserById(int id);
+    User findUserById(int id);
 
     User addUser(User user);
 

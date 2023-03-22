@@ -3,21 +3,21 @@ package ru.yandex.practicum.filmorate.storage.Film;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.filmorate.exceptions.DateReleaseException;
-import ru.yandex.practicum.filmorate.exceptions.FilmNameAlreadyExistException;
-import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.FilmException;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.*;
 
 @Component
 @Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
-    Map<Integer, Film> films;
-    Set<String> nameFilms;
+    private final Map<Integer, Film> films;
+    private final Set<String> nameFilms;
 
     private static int filmID = 1;
+    private static final LocalDate LOCAL_DATE = LocalDate.of(1895, 12, 28);
 
     @Autowired
     public InMemoryFilmStorage() {
@@ -26,16 +26,16 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film showFilmById(int id) {
+    public Film findFilmById(int id) {
         if (!(films.containsKey(id))) {
             log.warn("Не возможно найти film с id - {}.", id);
-            throw new FilmNotFoundException(String.format("Cannot search film by %s.", id));
+            throw new FilmException(String.format("Cannot search film by %s.", id));
         }
         return films.get(id);
     }
 
     @Override
-    public List<Film> showFilms() {
+    public List<Film> getFilms() {
         return new ArrayList<>(films.values());
     }
 
@@ -64,7 +64,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         films.remove(id);
     }
 
-    private void checkFilm(Film film) { // проверка
+    private void checkFilm(Film film) throws ValidationException { // проверка
 
         Film filmCheck = null;
         // для проверки меняем или создаем нового
@@ -72,23 +72,21 @@ public class InMemoryFilmStorage implements FilmStorage {
             filmCheck = films.get(film.getId());
         }
         if (nameFilms.contains(film.getName())) {
-            if (filmCheck != null) {
-                if (!film.getName().equals(filmCheck.getName())) {
-                    log.warn("Film with name - \"{}\" already exist", film.getName());
-                    throw new FilmNameAlreadyExistException("Film with this name already exist. " +
-                            "You cannot change Film's name.");
-                }
+            if ((filmCheck != null) & (!film.getName().equals(filmCheck.getName()))) {
+                log.warn("Film with name - \"{}\" already exist", film.getName());
+                throw new FilmException("Film with this name already exist. " +
+                        "You cannot change Film's name.");
+
             } else {
                 log.warn("Film with name - \"{}\" already exist", film.getName());
-                throw new FilmNameAlreadyExistException("Film with this name already exist. " +
+                throw new FilmException("Film with this name already exist. " +
                         "You cannot add Film's name.");
             }
         }
 
-        LocalDate localDate = LocalDate.of(1895, 12, 28);
-        if (film.getReleaseDate().isBefore(localDate)) {
-            log.warn("Ошибка добавление даты {}, дата должна быть после {}.", film.getReleaseDate(), localDate);
-            throw new DateReleaseException("Date is wrong.");
+        if (film.getReleaseDate().isBefore(LOCAL_DATE)) {
+            log.warn("Date is wrong {}, date must be after {}.", film.getReleaseDate(), LOCAL_DATE);
+            throw new ValidationException("Date is wrong.");
         }
 
         //проверка id при создании

@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.IncorrectParamException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -13,14 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/films")
 @Slf4j
+@RequiredArgsConstructor
 public class FilmController {
 
     private final FilmService filmService;
-
-    @Autowired
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
-    }
 
     @GetMapping("/{id}")
     public Film showFilmById(@PathVariable int id) {
@@ -35,19 +31,19 @@ public class FilmController {
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
-        log.info("Запрос на добавление элемента.");
+        log.info("Request to add an element.");
         return filmService.addFilm(film);
     }
 
     @PutMapping
     public Film changeFilm(@Valid @RequestBody Film film) {
-        log.info("Запрос на изменение элемента с id = {} .", film.getId());
+        log.info("Request to change an element from id = {} .", film.getId());
         return filmService.changeFilm(film);
     }
 
     @DeleteMapping("/{id}")
     public void deleteFilmById(@PathVariable int id) {
-        log.info("Запрос на удаление элемента с id = {} .", id);
+        log.info("Request to remove an element from id = {} .", id);
         filmService.deleteFilmById(id);
     }
 

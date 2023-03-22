@@ -8,9 +8,9 @@ import java.util.List;
 @Component
 public interface FilmStorage {
 
-    Film showFilmById(int id);
+    Film findFilmById(int id);
 
-    List<Film> showFilms();
+    List<Film> getFilms();
 
     Film addFilm(Film film);
 

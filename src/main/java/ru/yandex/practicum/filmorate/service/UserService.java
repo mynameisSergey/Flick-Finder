@@ -52,11 +52,11 @@ public class UserService {
     }
 
     public List<User> showUsers() {
-        return userStorage.showUsers();
+        return userStorage.getUsers();
     }
 
     public User showUserById(int id) {
-        return userStorage.showUserById(id);
+        return userStorage.findUserById(id);
     }
 
     public User addUser(User user) {
@@ -72,6 +72,6 @@ public class UserService {
     }
 
     public User getUserById(int id) {
-        return userStorage.showUserById(id);
+        return userStorage.findUserById(id);
     }
 }
