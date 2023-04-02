@@ -16,15 +16,11 @@ import java.util.Set;
 public class User {
 
     private int id;
-
     @Email(message = "It's not email.")
     private String email;
-
     @NotBlank(message = "User login cannot be empty and contains spaces.")
     private String login;
-
     private String name;
-
     @Past(message = "date of birth cannot be in the future.")
     private LocalDate birthday;
     @JsonIgnore

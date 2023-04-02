@@ -27,6 +27,8 @@ public class Film {
 
     @Min(value = 0L, message = "Film duration must be more that 0")
     private long duration;
+    private Genre genre;
+    private Rate rate;
     @JsonIgnore
     private final Map<User, Integer> likes = new HashMap<>();
 
@@ -55,4 +57,7 @@ public class Film {
     public Integer showAmountLikes() { // показать количество лайков
         return getLikes().size();
     }
+
+    public enum Genre {ACTION, COMEDY, DRAMA, FANTASY, HORROR, ROMANCE, THRILLER, WESTERN}
+    public enum Rate {G, PG, PG_13, R, NC_17}
 }
