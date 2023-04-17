@@ -75,4 +75,5 @@ public class UserController {
     public List<User> showCommonFriends(@PathVariable int id, @PathVariable int otherId) {
         return userService.showCommonFriends(id, otherId);
     }
+
 }

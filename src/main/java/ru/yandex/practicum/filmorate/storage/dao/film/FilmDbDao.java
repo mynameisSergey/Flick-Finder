@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.exeption.notfound.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exeption.validate.DateReleaseException;
 import ru.yandex.practicum.filmorate.exeption.validate.FilmIdNotNullException;
-import ru.yandex.practicum.filmorate.exeption.validate.FilmNameAlreadyExistException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.mapper.FilmMapper;
 
@@ -142,7 +141,7 @@ public class FilmDbDao implements FilmDao {
             log.error("Фильм в именем - {} уже имеет ID - {}",
                     Objects.requireNonNull(nameFilm).getName(),
                     nameFilm.getId());
-            throw new FilmNameAlreadyExistException(
+            throw new FilmIdNotNullException(
                     String.format("Фильм в именем - %s уже имеет ID - %s",
                             nameFilm.getName(),
                             nameFilm.getId()));
@@ -175,7 +174,7 @@ public class FilmDbDao implements FilmDao {
 
             if (nameFilm.getId() != film.getId()) {
                 log.error("Фильм в именем - {} уже имеет ID - {}", nameFilm.getName(), nameFilm.getId());
-                throw new FilmNameAlreadyExistException(
+                throw new FilmIdNotNullException(
                         String.format("Фильм в именем - %s уже имеет ID - %s", nameFilm.getName(), nameFilm.getId()));
             }
         } catch (EmptyResultDataAccessException e) {

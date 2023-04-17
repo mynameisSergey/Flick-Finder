@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exeption.notfound.UserNotFoundException;
-import ru.yandex.practicum.filmorate.exeption.validate.UserEmailAlreadyExistException;
 import ru.yandex.practicum.filmorate.exeption.validate.UserLoginAlreadyExistException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -110,12 +109,12 @@ public class InMemoryUserStorage implements UserDao {
             if (userCheck != null) {
                 if (!(user.getEmail().equals(userCheck.getEmail()))) {
                     log.warn("User with login - \"{}\" already exist", user.getEmail());
-                    throw new UserEmailAlreadyExistException("User with this Email already exist. " +
+                    throw new UserLoginAlreadyExistException("User with this Email already exist. " +
                             "You cannot change User's login.");
                 }
             } else {
                 log.warn("User with Email - \"{}\" already exist", user.getEmail());
-                throw new UserEmailAlreadyExistException("User with this Email already exist. " +
+                throw new UserLoginAlreadyExistException("User with this Email already exist. " +
                         "You cannot add User.");
             }
         }

@@ -122,6 +122,7 @@ public class FriendDbDao implements FriendDao {
                 return 2;
             }
         } catch (EmptyResultDataAccessException ignored) {
+            log.info("Сведения о статусе отсутствуют.");
         }
 
         try {

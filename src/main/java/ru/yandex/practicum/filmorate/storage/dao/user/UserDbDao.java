@@ -8,12 +8,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.exeption.notfound.UserNotFoundException;
-import ru.yandex.practicum.filmorate.exeption.validate.FilmNameAlreadyExistException;
-import ru.yandex.practicum.filmorate.exeption.validate.UserEmailAlreadyExistException;
-import ru.yandex.practicum.filmorate.exeption.validate.UserIdNotNullException;
 import ru.yandex.practicum.filmorate.exeption.validate.UserLoginAlreadyExistException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.mapper.UserMapper;
+import ru.yandex.practicum.filmorate.exeption.validate.FilmNameAlreadyExistException;
 
 import java.sql.Date;
 import java.util.List;
@@ -106,7 +104,7 @@ public class UserDbDao implements UserDao {
 
         if (user.getId() != 0) {
             log.error("user_id не должно иметь значение");
-            throw new UserIdNotNullException("user_id не должно иметь значение");
+            throw new UserLoginAlreadyExistException("user_id не должно иметь значение");
         }
 
 
@@ -138,7 +136,7 @@ public class UserDbDao implements UserDao {
             log.error("Невозможно добавить user. User c email - {} уже имеет ID - {}",
                     emailUser.getEmail(),
                     emailUser.getId());
-            throw new UserEmailAlreadyExistException(
+            throw new UserLoginAlreadyExistException(
                     String.format("Невозможно добавить user. User c email - %s уже имеет ID - %s",
                             emailUser.getEmail(),
                             emailUser.getId()));

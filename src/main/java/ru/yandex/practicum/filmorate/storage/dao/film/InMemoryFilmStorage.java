@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exeption.notfound.FilmNotFoundException;
+import ru.yandex.practicum.filmorate.exeption.validate.FilmIdNotNullException;
 import ru.yandex.practicum.filmorate.exeption.validate.DateReleaseException;
-import ru.yandex.practicum.filmorate.exeption.validate.FilmNameAlreadyExistException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
@@ -14,8 +14,8 @@ import java.util.*;
 @Slf4j
 @Component
 public class InMemoryFilmStorage implements FilmDao {
-    Map<Integer, Film> films;
-    Set<String> nameFilms;
+    private Map<Integer, Film> films;
+   private Set<String> nameFilms;
 
     private static int filmID = 1;
 
@@ -76,12 +76,12 @@ public class InMemoryFilmStorage implements FilmDao {
             if (filmCheck != null) {
                 if (!film.getName().equals(filmCheck.getName())) {
                     log.warn("Film with name - \"{}\" already exist", film.getName());
-                    throw new FilmNameAlreadyExistException("Film with this name already exist. " +
+                    throw new FilmIdNotNullException("Film with this name already exist. " +
                             "You cannot change Film's name.");
                 }
             } else {
                 log.warn("Film with name - \"{}\" already exist", film.getName());
-                throw new FilmNameAlreadyExistException("Film with this name already exist. " +
+                throw new FilmIdNotNullException("Film with this name already exist. " +
                         "You cannot add Film's name.");
             }
         }
