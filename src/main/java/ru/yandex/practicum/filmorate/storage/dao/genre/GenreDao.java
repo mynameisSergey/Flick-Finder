@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface GenreDao {
+
     Genre showGenreById(int id);
 
     List<Genre> showGenres();
