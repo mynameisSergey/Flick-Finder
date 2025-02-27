@@ -175,42 +175,30 @@ public class UserControllerTest {
                 " \"name\": \"Nick Name\"," +
                 " \"email\": \"mail@mail.ru\"," +
                 "  \"birthday\": \"1946-08-20\"}";
-
         String userJson2 = "{\"login\": \"user2\"," +
                 " \"name\": \"user2 Name\"," +
                 " \"email\": \"user2@mail.ru\"," +
                 "  \"birthday\": \"1946-08-20\"}";
-
         mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON).content(userJson));
         mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON).content(userJson2));
-
         mockMvc.perform(put("/users/1/friends/2"))
                 .andExpect(status().isOk());
-
-
         mockMvc.perform(get("/users/{id}/friends", 1))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":2")));
-
         mockMvc.perform(get("/users/{id}/friends", 2))
                 .andExpect(status().isOk())
                 .andExpect(content().string("[]"));
-
         mockMvc.perform(put("/users/2/friends/1"))
                 .andExpect(status().isOk());
-
-
         mockMvc.perform(delete("/users/1/friends/2")).andExpect(status().isOk());
         mockMvc.perform(delete("/users/2/friends/1")).andExpect(status().isOk());
         mockMvc.perform(delete("/users/1")).andExpect(status().isOk());
         mockMvc.perform(delete("/users/2")).andExpect(status().isOk());
-
-
     }
 
     @Test
     public void addFriendIncorrectIdTest() throws Exception {
-
 
         mockMvc.perform(put("/users/{id}/friends/{friendId}", 1, 111))
                 .andExpect(status().is4xxClientError());
