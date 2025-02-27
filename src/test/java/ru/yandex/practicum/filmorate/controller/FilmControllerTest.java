@@ -125,7 +125,6 @@ public class FilmControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
-
     @Test
     public void addFilmFailReleaseDateTest() throws Exception {
         String filmJson = "{\"name\": \"Film Updated\"," +
@@ -186,10 +185,7 @@ public class FilmControllerTest {
 
         mockMvc.perform(delete("/films/4"));
     }
-
-
     //______________________________________________Test like______________________________________
-
     @Test
     public void addLikeTest() throws Exception {
         String filmJson = "{\"name\": \"Film Updated\"," +
@@ -212,7 +208,6 @@ public class FilmControllerTest {
         mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().isBadRequest());
-
     }
 
     @Test

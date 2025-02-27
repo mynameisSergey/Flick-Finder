@@ -56,7 +56,6 @@ public class UserControllerTest {
                 .andExpect(content().string(containsString("\"id\":1")));
 
         mockMvc.perform(delete("/users/1"));
-
     }
 
     @Test
@@ -86,7 +85,6 @@ public class UserControllerTest {
 
     }
 
-
     @Test
     public void addUsersTestFailEmail() throws Exception {
         String userJson = "{\"login\": \"dolore\"," +
@@ -97,7 +95,6 @@ public class UserControllerTest {
         mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().is4xxClientError());
-
     }
 
     @Test
@@ -109,7 +106,6 @@ public class UserControllerTest {
         mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().is4xxClientError());
-
     }
 
     @Test
@@ -121,7 +117,6 @@ public class UserControllerTest {
         mockMvc.perform(post("/users").contentType(MediaType.APPLICATION_JSON)
                         .content(userJson))
                 .andExpect(status().is4xxClientError());
-
     }
 
 
@@ -168,7 +163,6 @@ public class UserControllerTest {
                 .andExpect(content().string(containsString("\"error\"")));
     }
     //------------------------------------------test Friends-----------------------------------------------
-
     @Test
     public void addFriendTest() throws Exception {
         String userJson = "{\"login\": \"dolore\"," +
@@ -202,7 +196,6 @@ public class UserControllerTest {
 
         mockMvc.perform(put("/users/{id}/friends/{friendId}", 1, 111))
                 .andExpect(status().is4xxClientError());
-
     }
 
     @Test
@@ -212,7 +205,6 @@ public class UserControllerTest {
         mockMvc.perform(put("/users/{id}/friends/{friendId}", 1, 1))
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().string(containsString("The user cannot be his own friend")));
-
     }
 
     @Test
