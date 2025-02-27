@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.exeption.notfound.LikeNotFoundException;
-import ru.yandex.practicum.filmorate.exeption.notfound.MpaNotFoundException;
+import ru.yandex.practicum.filmorate.exсeption.notfound.LikeNotFoundException;
+import ru.yandex.practicum.filmorate.exсeption.notfound.MpaNotFoundException;
 
 import java.util.List;
 

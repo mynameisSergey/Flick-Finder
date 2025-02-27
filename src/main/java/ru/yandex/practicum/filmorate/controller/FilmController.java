@@ -2,8 +2,9 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exeption.validate.IncorrectParamException;
+import ru.yandex.practicum.filmorate.exсeption.validate.IncorrectParamException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
@@ -32,28 +33,28 @@ public class FilmController {
         return filmService.showFilms();
     }
 
-
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Film addFilm(@Valid @RequestBody Film film) {
-        log.info("Запросто на добавление элемента.");
+        log.info("Запрос на добавление элемента.");
         return filmService.addFilm(film);
-
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     public Film changeFilm(@Valid @RequestBody Film film) {
-        log.info("Запрос на изменение элемента с id = {} .", film.getId());
+        log.info("Запрос на изменение элемента с id = {}.", film.getId());
         return filmService.changeFilm(film);
     }
 
     @DeleteMapping("/{id}")
     public void deleteFilmById(@PathVariable int id) {
-        log.info("Запрос на удаление элемента с id = {} .", id);
+        log.info("Запрос на удаление элемента с id = {}.", id);
         filmService.deleteFilmById(id);
     }
 
     @GetMapping("/popular")
-    public List<Film> showPopularFilms(@RequestParam(defaultValue = "10", required = false) int count) {
+    public List<Film> showPopularFilms(@RequestParam(defaultValue = "10") int count) {
         if (count <= 0) {
             throw new IncorrectParamException("Count param is incorrect.");
         }
@@ -69,5 +70,4 @@ public class FilmController {
     public void deleteLike(@PathVariable(name = "id") int filmId, @PathVariable int userId) {
         filmService.deleteLike(filmId, userId);
     }
-
 }

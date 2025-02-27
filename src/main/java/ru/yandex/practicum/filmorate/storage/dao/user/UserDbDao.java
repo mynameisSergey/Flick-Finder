@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.exeption.notfound.UserNotFoundException;
-import ru.yandex.practicum.filmorate.exeption.validate.UserLoginAlreadyExistException;
+import ru.yandex.practicum.filmorate.exсeption.notfound.UserNotFoundException;
+import ru.yandex.practicum.filmorate.exсeption.validate.UserLoginAlreadyExistException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.mapper.UserMapper;
-import ru.yandex.practicum.filmorate.exeption.validate.FilmNameAlreadyExistException;
+import ru.yandex.practicum.filmorate.exсeption.validate.FilmNameAlreadyExistException;
 
 import java.sql.Date;
 import java.util.List;

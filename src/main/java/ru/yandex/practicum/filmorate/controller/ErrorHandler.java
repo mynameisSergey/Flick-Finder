@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.yandex.practicum.filmorate.exeption.notfound.NotFoundException;
-import ru.yandex.practicum.filmorate.exeption.validate.*;
+import ru.yandex.practicum.filmorate.exсeption.notfound.NotFoundException;
+import ru.yandex.practicum.filmorate.exсeption.validate.*;
 import ru.yandex.practicum.filmorate.model.ErrorResponse;
 
 @RestControllerAdvice

@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.exeption.validate;
+package ru.yandex.practicum.filmorate.exсeption.validate;
 
 public class UserLoginAlreadyExistException extends RuntimeException {
     public UserLoginAlreadyExistException(String message) {

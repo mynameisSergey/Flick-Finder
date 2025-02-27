@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.exeption.notfound.FilmNotFoundException;
-import ru.yandex.practicum.filmorate.exeption.validate.DateReleaseException;
-import ru.yandex.practicum.filmorate.exeption.validate.FilmIdNotNullException;
+import ru.yandex.practicum.filmorate.exсeption.notfound.FilmNotFoundException;
+import ru.yandex.practicum.filmorate.exсeption.validate.DateReleaseException;
+import ru.yandex.practicum.filmorate.exсeption.validate.FilmIdNotNullException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.mapper.FilmMapper;
 
