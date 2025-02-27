@@ -19,6 +19,13 @@ public class FilmMapper implements RowMapper<Film> {
         film.setId(rs.getInt("film_id"));
         film.setName(rs.getString("name"));
         film.setDescription(rs.getString("description"));
+
+        if (rs.getDate("release_date") != null) {
+            film.setReleaseDate(rs.getDate("release_date").toLocalDate());
+        } else {
+            film.setReleaseDate(null); // Или установите значение по умолчанию
+        }
+
         film.setReleaseDate(rs.getDate("release_date").toLocalDate());
         film.setDuration(rs.getInt("duration_in_minutes"));
         film.setMpa(mpa);
