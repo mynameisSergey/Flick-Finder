@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class FilmService {
 
     private final FilmDao filmDao;
@@ -22,15 +24,6 @@ public class FilmService {
     private final GenreDao genreDao;
     private final MpaDao mpaDao;
     private final LikeDao likeDao;
-
-    @Autowired
-    public FilmService(FilmDao filmDao, UserDao userDao, GenreDao genreDao, MpaDao mpaDao, LikeDao likeDao) {
-        this.filmDao = filmDao;
-        this.userDao = userDao;
-        this.genreDao = genreDao;
-        this.mpaDao = mpaDao;
-        this.likeDao = likeDao;
-    }
 
     public void addLike(int filmId, int userId) {
         filmDao.showFilmById(filmId);
@@ -51,7 +44,6 @@ public class FilmService {
         films.addAll(showFilms());
         return films.stream().limit(count).collect(Collectors.toList());
     }
-
 
     public Film showFilmById(int id) {
         Film film = filmDao.showFilmById(id);
