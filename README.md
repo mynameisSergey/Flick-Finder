@@ -1,4 +1,4 @@
-# java-filmorate
+##### Filmorate
 Template repository for Filmorate project.
 ![](https://github.com/mynameisSergey/java-filmorate/blob/add-database/img/Schema.png)
 **Чтобы добавить лайк фильму, нужно добавить строку в Like юзер - фильм.
