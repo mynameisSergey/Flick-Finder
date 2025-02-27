@@ -13,7 +13,6 @@
 * Java 17, Spring Boot, JUnit, Spring JDBC
 
 
-
 ## **ER диаграмма базы данных**  
 
 ![](https://github.com/mynameisSergey/java-filmorate/blob/add-database/img/Schema.png)
