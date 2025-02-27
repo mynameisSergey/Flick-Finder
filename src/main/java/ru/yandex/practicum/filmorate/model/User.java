@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -31,13 +32,12 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
-
-        return id == user.id;
+        return id == user.id; // Сравниваем только по id
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id); // Используем Objects.hash для лучшего распределения
     }
 
 }

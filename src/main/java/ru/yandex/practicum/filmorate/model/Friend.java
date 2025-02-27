@@ -3,17 +3,38 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import java.util.Objects;
 
 @Data
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
 public class Friend {
 
-    @NonNull
     private Integer userId;
-    @NonNull
     private Integer friendId;
 
-    private Boolean status;
+    private boolean status; // Примитивный тип для статуса
+
+    public Friend(Integer userId, Integer friendId) {
+        if (userId == null || friendId == null) {
+            throw new IllegalArgumentException("User ID and Friend ID cannot be null");
+        }
+        this.userId = userId;
+        this.friendId = friendId;
+        this.status = false; // Установите значение по умолчанию для статуса
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Friend friend = (Friend) o;
+        return Objects.equals(userId, friend.userId) &&
+                Objects.equals(friendId, friend.friendId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, friendId);
+    }
 }
